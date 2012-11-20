@@ -1,0 +1,30 @@
+<Camera>
+
+<Screen>
+	Screen
+</Screen>
+
+<Shooting>Shooting</Shooting>
+
+<Images>
+	Image quality|
+	Prints|
+	Color|
+	Clarity|
+	Pictures|
+	Photos|
+	Snapshots|
+	Indoor shots|
+	Outdoor shots|
+		Images
+</Images>
+
+<Video>
+	Video recording|
+	HD video|
+	Hi-def video|
+		Video
+</Video>
+
+
+</Camera>
