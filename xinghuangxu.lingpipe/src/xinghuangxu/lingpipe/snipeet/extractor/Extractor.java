@@ -22,7 +22,7 @@ public class Extractor {
 		}
 		// return current + DIR_NAME + "\\"+CORPUS_DIR_NAME+"\\" +
 		// CORPUS_FILE_NAME;
-		return current + "\\" + FileName;
+		return current + FileName;
 	}
 
 	/**
@@ -62,11 +62,11 @@ public class Extractor {
 		System.out.println("SnippetSize: "+"-"+left+" +"+right);
 
 
-		String dir = getPath("Sentiment_DB");
-		String reviewDir = dir + "\\Review_DB";
-		String aspDir = dir + "\\Aspects_DB";
-		String snippetDir = dir + "\\Snippet_DB";
-		String trainingDir=dir+"\\Training_DB";
+		String dir = getPath("/Sentiment_DB");
+		String reviewDir = dir + "/Review_DB";
+		String aspDir = dir + "/Aspects_DB";
+		String snippetDir = dir + "/Snippet_DB";
+		String trainingDir=dir+"/Training_DB";
 		File sentimentFolder = new File(dir);
 		sentimentFolder.mkdir();
 		File reviewFolder = new File(reviewDir);
