@@ -11,11 +11,15 @@ import java.util.Set;
 
 
 public class SnippetDictionary {
+	
+	private String name;
 
-	Map<String, List<Snippet>> snippetDictionary;
-	Map<String,Integer> aspectsPolarity;
+	private Map<String, List<Snippet>> snippetDictionary;
+	private Map<String,Integer> aspectsPolarity;
+	
 
-	public SnippetDictionary() {
+	public SnippetDictionary(String name) {
+		this.name=name;
 		snippetDictionary = new HashMap<String, List<Snippet>>();
 		aspectsPolarity=new HashMap<String,Integer>();
 	}
@@ -33,6 +37,17 @@ public class SnippetDictionary {
 	
 	public int size(){
 		return snippetDictionary.size();
+	}
+	
+	public int snippetSize(){
+		Set<String> keys=snippetDictionary.keySet();
+		int count=0;
+		for(Iterator<String> i=keys.iterator();i.hasNext();){
+			String key=i.next();
+			List<Snippet> snippets=snippetDictionary.get(key);
+			count+=snippets.size();
+		}
+		return count;
 	}
 	
 	public void trimAll(int left,int right){
@@ -85,6 +100,7 @@ public class SnippetDictionary {
 	
 	public String getPolarities(){
 		StringBuilder sb=new StringBuilder();
+		sb.append(name+":\n");
 		Set<String> keys=aspectsPolarity.keySet();
 		for(Iterator<String> i=keys.iterator();i.hasNext();){
 			String key=i.next();
@@ -92,8 +108,9 @@ public class SnippetDictionary {
 			Integer polarity=aspectsPolarity.get(key);
 			Double ratio=(polarity.doubleValue()/sl.size())*100;
 			DecimalFormat df=new DecimalFormat("#.##");
-			sb.append(" # "+key+": "+polarity+"/"+sl.size()+" = "+df.format(ratio)+"%\n");
+			sb.append(" # "+key+": "+polarity+"/"+sl.size()+" = "+df.format(ratio)+"% pos\n");
 		}
+		sb.append("///////////////////////////////////////////////////////////////////////////\n\n");
 		return sb.toString();
 	}
 

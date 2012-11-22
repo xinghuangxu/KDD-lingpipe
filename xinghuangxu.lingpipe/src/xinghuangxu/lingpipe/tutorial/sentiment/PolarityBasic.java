@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import xinghuangxu.lingpipe.sentiment.logging.Log;
 import xinghuangxu.lingpipe.snipeet.extractor.Snippet;
 import xinghuangxu.lingpipe.snipeet.extractor.SnippetDictionary;
 
@@ -28,18 +29,33 @@ public class PolarityBasic {
 	String[] mCategories;
 	DynamicLMClassifier<NGramProcessLM> mClassifier;
 	SnippetDictionary snippetDictionary;
+	
+	private static PolarityBasic instance;
 
-	public PolarityBasic(String trainingDir, SnippetDictionary snippetDictionary) {
+	private PolarityBasic(String trainingDir) {
 
-		this.snippetDictionary = snippetDictionary;
-		System.out.println("\nBASIC POLARITY DEMO");
+		//this.snippetDictionary = snippetDictionary;
+
 		mPolarityDir = new File(trainingDir);
-		System.out.println("Training Data Directory=" + mPolarityDir);
 		mCategories = mPolarityDir.list();
 		int nGram = 8;
 		mClassifier = DynamicLMClassifier
 				.createNGramProcess(mCategories, nGram);
 	}
+	
+	public static void create(String trainingDir) throws IOException{
+		instance=new PolarityBasic(trainingDir);
+		instance.train();
+	}
+	
+	public static PolarityBasic getInstance(){
+		return instance;
+	}
+	
+	private void setData(SnippetDictionary sd){
+		snippetDictionary=sd;
+	}
+	
 
 	/**
 	 * Code for running Lingpipe for Sentiment Analysis
@@ -47,10 +63,10 @@ public class PolarityBasic {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public void run() throws ClassNotFoundException, IOException {
-		train();
-		evaluate();
-	}
+//	public void run() throws ClassNotFoundException, IOException {
+//		train();
+//		evaluate();
+//	}
 
 
 
@@ -62,7 +78,7 @@ public class PolarityBasic {
 	void train() throws IOException {
 		int numTrainingCases = 0;
 		int numTrainingChars = 0;
-		System.out.println("Training.");
+		Log.info("Training.");
 		for (int i = 0; i < mCategories.length; ++i) {
 			String category = mCategories[i];
 			Classification classification = new Classification(category);
@@ -78,8 +94,8 @@ public class PolarityBasic {
 				mClassifier.handle(classified);
 			}
 		}
-		System.out.println("  # Training Cases=" + numTrainingCases);
-		System.out.println("  # Training Chars=" + numTrainingChars);
+		Log.info("  # Training Cases=" + numTrainingCases);
+		Log.info("  # Training Chars=" + numTrainingChars);
 	}
 
 	
@@ -90,7 +106,7 @@ public class PolarityBasic {
 	 */
 	void evaluate() throws IOException {
 
-		System.out.println("\nEvaluating.");
+		Log.info("\nEvaluating.");
 		Set<String> keys = snippetDictionary.keySet();
 		for (Iterator<String> i = keys.iterator(); i.hasNext();) {
 			String key = i.next();
@@ -106,8 +122,17 @@ public class PolarityBasic {
 			}
 		}
 		snippetDictionary.analysePolarity();
-		System.out.println(snippetDictionary.getPolarities());
+		Log.info(snippetDictionary.getPolarities());
 
+	}
+
+	public static void setSnippetDictionary(SnippetDictionary snippetDictionary) {
+		instance.setData(snippetDictionary);
+		
+	}
+	
+	public static void run() throws IOException{
+		instance.evaluate();
 	}
 
 

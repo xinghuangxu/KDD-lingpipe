@@ -7,11 +7,12 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
+import xinghuangxu.lingpipe.sentiment.logging.Log;
 import xinghuangxu.lingpipe.snipeet.extractor.util.NodeWalker;
 
 public class XMLParser {
 
-	public static Review getReviews(File[] reviewFiles) throws IOException,
+	public static Review getReviews(File reviewFile) throws IOException,
 			ParserConfigurationException, org.xml.sax.SAXException {
 		// Create a factory object for creating DOM parsers and configure it
 		// DocumentBuilderFactory factory =
@@ -23,7 +24,7 @@ public class XMLParser {
 		// // Now use the factory to create a DOM parser, a.k.a. DocumentBuilder
 		// DocumentBuilder parser = factory.newDocumentBuilder();
 		// Parse the file and build a Document tree to represent its content
-		Document document = getDOM(reviewFiles[0]);
+
 		// Ask the document for a list of all <sect1> elements it contains
 
 		// NodeWalker walker=new NodeWalker(document);
@@ -33,9 +34,9 @@ public class XMLParser {
 		// short nodeType = currentNode.getNodeType();
 		// System.out.println(nodeName+nodeType);
 		// }
-
 		//
 		Review review = new Review();
+		Document document = getDOM(reviewFile);
 		NodeList sections = document.getElementsByTagName("Review");
 		// Loop through those <sect1> elements one at a time
 		int numSections = sections.getLength();
@@ -85,29 +86,32 @@ public class XMLParser {
 			throws ParserConfigurationException, SAXException, IOException {
 
 		AspDictionary aspDictionary = new AspDictionary();
-		Document document = getDOM(aspFiles[0]);
-		// Node root=document.getChildNodes().item(0);
-		// NodeList aspects=root.getChildNodes();
-		// for(int i=0;i<aspects.getLength();i++){
-		// Node aspect=aspects.item(i);
-		// System.out.println("name: "+aspect.getNodeName());
-		// System.out.println("value: "+aspect.getNodeValue());
-		// }
 
-		NodeWalker walker = new NodeWalker(document);
-		String nodeName = "";
-		while (walker.hasNext()) {
-			Node currentNode = walker.nextNode();
-			short nodeType = currentNode.getNodeType();
-			if (nodeType != Node.TEXT_NODE)
-				nodeName = currentNode.getNodeName();
-			if (nodeType == Node.TEXT_NODE&&nodeName!=null) {
-				String nodeValue = currentNode.getNodeValue();
+		for (File f : aspFiles) {
+			Document document = getDOM(f);
+			// Node root=document.getChildNodes().item(0);
+			// NodeList aspects=root.getChildNodes();
+			// for(int i=0;i<aspects.getLength();i++){
+			// Node aspect=aspects.item(i);
+			// System.out.println("name: "+aspect.getNodeName());
+			// System.out.println("value: "+aspect.getNodeValue());
+			// }
 
-				System.out.println("Name: " + nodeName + "|| Value: "
-						+ nodeValue + "|| Type: " + nodeType);
-				aspDictionary.add(nodeName, nodeValue.toLowerCase());
-				nodeName = null;
+			NodeWalker walker = new NodeWalker(document);
+			String nodeName = "";
+			while (walker.hasNext()) {
+				Node currentNode = walker.nextNode();
+				short nodeType = currentNode.getNodeType();
+				if (nodeType != Node.TEXT_NODE)
+					nodeName = currentNode.getNodeName();
+				if (nodeType == Node.TEXT_NODE && nodeName != null) {
+					String nodeValue = currentNode.getNodeValue();
+
+					Log.info("Name: " + nodeName + "|| Value: "
+							+ nodeValue + "|| Type: " + nodeType);
+					aspDictionary.add(nodeName, nodeValue.toLowerCase());
+					nodeName = null;
+				}
 			}
 		}
 		return aspDictionary;

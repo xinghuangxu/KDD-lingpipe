@@ -18,8 +18,8 @@ public class SnippetFactory {
 	}
 
 
-	public SnippetDictionary newSnippetDictionary(Review review, AspDictionary aspDictionary) {
-		SnippetDictionary snippetDictionary = new SnippetDictionary();
+	public SnippetDictionary newSnippetDictionary(String name, Review review, AspDictionary aspDictionary) {
+		SnippetDictionary snippetDictionary = new SnippetDictionary(name);
 		Set<String> tagNames=aspDictionary.keySet();
 		for(Iterator<String> i=tagNames.iterator();i.hasNext();){
 			String tagName=i.next();
