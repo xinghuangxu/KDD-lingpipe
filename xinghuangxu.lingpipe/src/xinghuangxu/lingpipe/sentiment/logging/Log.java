@@ -64,4 +64,9 @@ public class Log {
 		log.log(info);
 	}
 
+	public static void createFolder(String logDir) {
+		new File(logDir).mkdir();
+		
+	}
+
 }

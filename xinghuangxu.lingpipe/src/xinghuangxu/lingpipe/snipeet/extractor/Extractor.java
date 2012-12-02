@@ -57,7 +57,7 @@ public class Extractor {
 	}
 
 	public void run(String[] args) throws Exception {
-
+		Log.createFolder(logDir);
 		
 		if (args.length < 1) {
 			Log.info("Usage: - l + r");
