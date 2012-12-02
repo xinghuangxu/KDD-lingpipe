@@ -17,7 +17,7 @@ For example: if [ - 5 + 5 ] is input, snipeet will look like
 For example, if you want to get the sentiment of camera. You can create a folder named 
 Camera and put all the xml review filesa about that camera inside the folder. After that you also need to add a aspect file 
 inside this folder. 
-A example of aspect file:
+A example of aspect file(the name of the aspect file must have an "aspect" string in it):
 <Camera><Screen>Screen|LED</Screen><Images>Image|Quality|Prints|Color|Clarity|Pictures|Photos|Snapshots|Indoor shots|Outdoor shots </Images><Battery>Batter</Battery><Zoom>Zoom|Digital zoom</Zoom><Features>Feature|Setting|Auto</Features><Price>Price</Price></Camera>
 6. After that you can run the extractor and you will be able to find the results inside the .../xinghuangxu.lingpipe/Sentiment_DB/Log_DB folder.
  
@@ -30,7 +30,7 @@ Run in JVM:
 For example, if you want to get the sentiment of camera. You can create a folder named 
 Camera and put all the xml review filesa about that camera inside the folder. After that you also need to add a aspect file 
 inside this folder. 
-A example of aspect file:
+A example of aspect file(the name of the aspect file must have an "aspect" string in it):
 <Camera><Screen>Screen|LED</Screen><Images>Image|Quality|Prints|Color|Clarity|Pictures|Photos|Snapshots|Indoor shots|Outdoor shots </Images><Battery>Batter</Battery><Zoom>Zoom|Digital zoom</Zoom><Features>Feature|Setting|Auto</Features><Price>Price</Price></Camera>
 5. input command: java -jar kdd-lingpipe-sentiment.jar - l - r
 6. After that you can run the extractor and you will be able to find the results inside the .../xinghuangxu.lingpipe/Sentiment_DB/Log_DB folder.
