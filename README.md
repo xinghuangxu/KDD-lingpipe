@@ -1,9 +1,21 @@
 KDD-lingpipe
 ============
 
-Use lingpipe to do sentiment analysis
+Use lingpipe to do sentiment analysis<br>
 
-How to run the sentiment analysis on aspect-level.
+How to run and configure the sentiment analysis on aspect-level.<br>
+
+
+<table>
+<caption>Folder Structure:</caption>
+<th colspan="3">Sentiment_DB</th>
+<tr>
+<td>Training_DB</td>
+<td>Review_DB</td>
+<td>Log_DB</td>
+</tr>
+</table>
+
 <ul>
 <li>Run on eclipse:
 <ol>
