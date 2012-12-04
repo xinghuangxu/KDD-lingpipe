@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 import xinghuangxu.lingpipe.sentiment.logging.Log;
-import xinghuangxu.lingpipe.snipeet.extractor.Snippet;
-import xinghuangxu.lingpipe.snipeet.extractor.SnippetDictionary;
+import xinghuangxu.lingpipe.snippet.extractor.Snippet;
+import xinghuangxu.lingpipe.snippet.extractor.SnippetDictionary;
 
 /**
  * Polarity Basix Demo class
