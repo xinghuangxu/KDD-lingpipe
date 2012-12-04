@@ -21,6 +21,7 @@ import xinghuangxu.lingpipe.tutorial.sentiment.PolarityBasic;
 public class Extractor {
 
 	private final String dir = getPath("/Sentiment_DB");
+	// private final String sentimetDir="/Sentiment_DB";
 	private final String reviewDir = dir + "/Review_DB";
 	private final String trainingDir = dir + "/Training_DB";
 	private final String logDir = dir + "/Log_DB";
@@ -47,7 +48,7 @@ public class Extractor {
 	public static void main(String[] args) {
 		Extractor extractor = new Extractor();
 		try {
-			
+
 			extractor.run(args);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -57,12 +58,23 @@ public class Extractor {
 	}
 
 	public void run(String[] args) throws Exception {
+
 		Log.createFolder(logDir);
-		
+
 		if (args.length < 1) {
-			Log.info("Usage: - l + r");
+			System.out.println("Usage: - l + r");
 			return;
 		}
+
+		// Create Folders
+		File sentimentFolder = new File(dir);
+		sentimentFolder.mkdir();
+		File reviewDB = new File(reviewDir);
+		reviewDB.mkdir();
+		File logDB = new File(logDir);
+		logDB.mkdir();
+		File trainingDB = new File(trainingDir);
+		trainingDB.mkdir();
 
 		int left = 0;
 		int right = 0;
@@ -76,29 +88,17 @@ public class Extractor {
 				i++;
 			}
 		}
-		
-		String logFolderName="("+left+","+right+")-";
-		Log.createInstance(logDir+"/"+logFolderName);
+
+		String logFolderName = "(" + left + "," + right + ")-";
+		Log.createInstance(logDir + "/" + logFolderName);
 		Log.createFile("SentimentArgs");
 
 		Log.info("SnippetSize: " + "-" + left + " +" + right);
-
-		File sentimentFolder = new File(dir);
-		sentimentFolder.mkdir();
-		File reviewDB = new File(reviewDir);
-		reviewDB.mkdir();
-		File logDB=new File(logDir);
-		logDB.mkdir();
-		File trainingDB=new File(trainingDir);
-		trainingDB.mkdir();
-
 
 		// Initialize Simple Demo Training
 		Log.info("\nBASIC POLARITY DEMO");
 		Log.info("Training Data Directory=" + trainingDir);
 		PolarityBasic.create(trainingDir);
-
-
 
 		// Load all the review folders and process all the files in them
 		File[] reviewFolders = reviewDB.listFiles();
@@ -123,7 +123,7 @@ public class Extractor {
 					reviews.add(file);
 			}
 		}
-		Log.createFile(reviewFolder.getName()+"("+left+","+right+")");
+		Log.createFile(reviewFolder.getName() + "(" + left + "," + right + ")");
 
 		// Load all the aspects
 		Log.info("\nLoad Aspects From Directory: " + reviewFolder);
@@ -145,10 +145,8 @@ public class Extractor {
 					.newSnippetDictionary(reviewFile.getName(), review,
 							aspDictionary);
 			snippetDictionary.trimAll(left, right);
-			Log.info("Snippet Dictionary Size: "
-					+ snippetDictionary.size());
-			Log.info("Snippet Size: "
-					+ snippetDictionary.snippetSize());
+			Log.info("Snippet Dictionary Size: " + snippetDictionary.size());
+			Log.info("Snippet Size: " + snippetDictionary.snippetSize());
 
 			// Log.info(snippetDictionary.toString());
 
