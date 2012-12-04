@@ -1,7 +1,0 @@
-SnippetSize: -5 +5
-
-BASIC POLARITY DEMO
-Training Data Directory=C:\Users\xinghuang\git\KDD-lingpipe\xinghuangxu.lingpipe/Sentiment_DB/Training_DB
-Training.
-  # Training Cases=2000
-  # Training Chars=7786004
