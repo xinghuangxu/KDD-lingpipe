@@ -10,14 +10,12 @@ public class Snippet {
 
 	public Snippet(String tagName, String name, String left, String right) {
 		super();
-		this.tagName = tagName;
 		this.name = name;
 		this.leftString = left;
 		this.rightString = right;
 	}
 	
 	private int polarity;
-	private String tagName;
 	private String name;
 	private String leftString;
 	private String rightString;
@@ -25,10 +23,17 @@ public class Snippet {
 	public void trim(int left,int right){
 		String cleanLeftString=leftString.trim().replaceAll("[^0-9a-z\\s]", "").replaceAll(" +"," ");
 		String cleanRightString=rightString.trim().replaceAll("[^0-9a-z\\s]", "").replaceAll(" +"," ");
-		leftString=getLast(left,cleanLeftString);
+		leftString=getRight(left,cleanLeftString);
 		rightString=getFirst(right,cleanRightString);
 	}
 
+	/**
+	 * get the Left part of the snippet
+	 * Left <tagName> name </tagName> Right
+	 * @param num
+	 * @param leftString
+	 * @return
+	 */
 	private static String getFirst(int num,String leftString) {
 		String[] splits=leftString.split(" ");
 		if(num>splits.length)num=splits.length;
@@ -39,7 +44,14 @@ public class Snippet {
 		return sb.toString();
 	}
 
-	private static String getLast(int num,String rightString) {
+	/**
+	 * Get the Right part of the snippet
+	 * Left <tagName> name </tagName> Right
+	 * @param num
+	 * @param rightString
+	 * @return
+	 */
+	private static String getRight(int num,String rightString) {
 		String[] splits=rightString.split(" ");
 		if(num>splits.length)num=splits.length;
 		StringBuilder sb=new StringBuilder();

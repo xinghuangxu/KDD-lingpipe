@@ -73,12 +73,18 @@ public class SnippetDictionary {
 	@Override
 	public String toString() {
 		StringBuilder sb=new StringBuilder();
+		String productName=name.substring(0,name.length()-4);
 		Set<String> keys=snippetDictionary.keySet();
+		int k=0;
 		for(Iterator<String> i=keys.iterator();i.hasNext();){
+			k++;
 			String key=i.next();
+			sb.append("\n"+k+"."+key+" - "+productName+"\n");
 			List<Snippet> snippets=snippetDictionary.get(key);
+			int j=0;
 			for(Iterator<Snippet> snippetsIterator=snippets.iterator();snippetsIterator.hasNext();){
-				sb.append(snippetsIterator.next().toString()+"\n");
+				j++;
+				sb.append("  "+"("+j+") "+snippetsIterator.next().toString()+"\n");
 			}
 		}
 		return sb.toString();

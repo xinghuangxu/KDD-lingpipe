@@ -6,13 +6,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Save the aspects used to extract snippets
+ * Work just like a dictionary
+ * @author xinghuang
+ *
+ */
 public class AspDictionary {
 
+	/**
+	 * HashTable
+	 * Key:String is the name of the aspect
+	 * Value:List<String> is the acronyms of the aspect
+	 * Example: <Screen>Screen|LED</Screen>
+	 */
 	Map<String, List<String>> aspectDictionary;
 
+	
 	public AspDictionary() {
 		aspectDictionary=new HashMap<String,List<String>>();
 	}
+	
+	
 	
 	public void add(String key, String value){
 		String[] values=value.trim().split("\\|");

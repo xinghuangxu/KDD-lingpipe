@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
+/**
+ * Review Iterator
+ * @author xinghuang
+ *
+ */
 public class Review implements Iterable<String> {
 
 	private List<String> reviewList;

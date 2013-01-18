@@ -78,7 +78,7 @@ public class Extractor {
 
 		int left = 0;
 		int right = 0;
-
+		
 		for (int i = 0; i < args.length; i++) {
 			if ("-".equals(args[i])) {
 				left = Integer.parseInt(args[i + 1]);
@@ -88,19 +88,20 @@ public class Extractor {
 				i++;
 			}
 		}
-
+		
 		String logFolderName = "(" + left + "," + right + ")-";
 		Log.createInstance(logDir + "/" + logFolderName);
 		Log.createFile("SentimentArgs");
-
+		
 		Log.info("SnippetSize: " + "-" + left + " +" + right);
-
-		// Initialize Simple Demo Training
+		
+		// Initialize Simple Demo Training. Currently the IMDB movie reviews data is used
 		Log.info("\nBASIC POLARITY DEMO");
 		Log.info("Training Data Directory=" + trainingDir);
 		PolarityBasic.create(trainingDir);
 
 		// Load all the review folders and process all the files in them
+		// One review Folder per time
 		File[] reviewFolders = reviewDB.listFiles();
 		for (File reviewFolder : reviewFolders) {
 			runSentimentDemo(reviewFolder, left, right);
@@ -108,6 +109,19 @@ public class Extractor {
 
 	}
 
+	/**
+	 * Process one folder of reviews + apsects 
+	 * (they should be kept in one folder and the difference between review files and aspect files: 
+	 * aspect files have names include string "aspect"
+	 * 
+	 * @param reviewFolder
+	 * @param left
+	 * @param right
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 */
 	private void runSentimentDemo(File reviewFolder, int left, int right)
 			throws ClassNotFoundException, IOException,
 			ParserConfigurationException, SAXException {
@@ -126,6 +140,7 @@ public class Extractor {
 		Log.createFile(reviewFolder.getName() + "(" + left + "," + right + ")");
 
 		// Load all the aspects
+		Log.info("\n\n///////////////////////////////////////////////////////////////////////////");
 		Log.info("\nLoad Aspects From Directory: " + reviewFolder);
 		// File[] aspFiles = aspFolder.listFiles();
 		AspDictionary aspDictionary = XMLParser.getAspectsDictionary(aspects
@@ -146,6 +161,7 @@ public class Extractor {
 							aspDictionary);
 			snippetDictionary.trimAll(left, right);
 			Log.info("Snippet Dictionary Size: " + snippetDictionary.size());
+			Log.info(snippetDictionary.toString());
 			Log.info("Snippet Size: " + snippetDictionary.snippetSize());
 
 			// Log.info(snippetDictionary.toString());
