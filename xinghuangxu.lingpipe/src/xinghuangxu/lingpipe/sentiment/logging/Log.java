@@ -20,6 +20,8 @@ public class Log {
 	
 	private File file;
 	
+	private File csvFile;
+	
 	private final String date;
 
 	private BufferedWriter bw;
@@ -60,6 +62,8 @@ public class Log {
 	 */
 	private void setName(String name) {
 		file=new File(dir,date+"-"+name+".txt");
+		//Create CSV File
+		csvFile=new File(dir,date+"-"+name+".csv");
 	}
 	
 	/**
@@ -76,10 +80,23 @@ public class Log {
 			bw.close();
 		}
 	}
-
+	
+	private void logCSV(String csvInfo)throws IOException{
+		try {
+			bw = new BufferedWriter(new FileWriter(csvFile,true));
+			bw.write(csvInfo+"\n");
+			System.out.println(csvInfo);
+		} finally {
+			bw.close();
+		}
+	}
 
 	public static void info(String info) throws IOException {
 		log.log(info);
+	}
+	
+	public static void infoCSV(String info) throws IOException {
+		log.logCSV(info);
 	}
 
 	/**

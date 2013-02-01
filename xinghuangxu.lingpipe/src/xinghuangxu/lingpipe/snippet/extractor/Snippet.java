@@ -75,6 +75,13 @@ public class Snippet {
 	public int getPolarity(){
 		return polarity;
 	}
+
+	public String toStringCSV() {
+		String p="";
+		if(polarity==1)p="pos";
+		else	p="neg";
+		return "\""+leftString+"@"+name+"@ "+rightString+"\","+"\""+p+"\"";
+	}
 	
 
 }

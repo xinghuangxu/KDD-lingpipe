@@ -163,12 +163,14 @@ public class Extractor {
 			Log.info("Snippet Dictionary Size: " + snippetDictionary.size());
 			Log.info(snippetDictionary.toString());
 			Log.info("Snippet Size: " + snippetDictionary.snippetSize());
-
+			
 			// Log.info(snippetDictionary.toString());
 
 			// Run basic polarity
 			PolarityBasic.setSnippetDictionary(snippetDictionary);
 			PolarityBasic.run();
+			
+			Log.infoCSV(snippetDictionary.toStringCSV());
 		}
 
 		return;

@@ -89,6 +89,22 @@ public class SnippetDictionary {
 		}
 		return sb.toString();
 	}
+	
+	public String toStringCSV(){
+	
+		StringBuilder sb=new StringBuilder("\"product\",\"Aspect\",\"Snippet\",\"LingPipe Sentiment\",\"Sentiment\",\"Pos Terms\",\"Neg Terms\"\n");
+		String productName="\""+name.substring(0,name.length()-4)+"\"";
+		Set<String> keys=snippetDictionary.keySet();
+		for(Iterator<String> i=keys.iterator();i.hasNext();){
+			String key=i.next();
+			List<Snippet> snippets=snippetDictionary.get(key);
+			key="\""+key+"\"";
+			for(Iterator<Snippet> snippetsIterator=snippets.iterator();snippetsIterator.hasNext();){
+				sb.append(productName+","+key+","+snippetsIterator.next().toStringCSV()+"\n");
+			}
+		}
+		return sb.toString();
+	}
 
 	public void analysePolarity() {
 		Set<String> keys=snippetDictionary.keySet();
